@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>恐龍演化與古生物學總覽簡報</title>
+  <style>
+    :root {
+      --bg-dark: #0a0e17;
+      --bg-card: #111827;
+      --bg-card-hover: #17223b;
+      --border-subtle: #23304a;
+      --border-accent: #3b82f6;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-cyan: #38bdf8;
+      --accent-gold: #fbbf24;
+      --accent-emerald: #34d399;
+      --accent-rose: #fb7185;
+      --accent-purple: #c084fc;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Presentation Deck Container */
+    #deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 10%, #151e33 0%, #0a0e17 75%);
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 3.5rem 5.5rem 5rem 5.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(35px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+      z-index: 2;
+    }
+
+    .slide.prev {
+      opacity: 0;
+      transform: translateX(-35px);
+      z-index: 1;
+    }
+
+    /* Scrollbar */
+    .slide::-webkit-scrollbar {
+      width: 6px;
+    }
+    .slide::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: 3px;
+    }
+
+    /* Prominent Theme Banner */
+    .theme-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 0.45rem 1.1rem;
+      border-radius: 6px;
+      margin-bottom: 0.8rem;
+      width: fit-content;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-banner.theme-1 {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: var(--accent-cyan);
+    }
+    .theme-banner.theme-2 {
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      color: var(--accent-gold);
+    }
+    .theme-banner.theme-3 {
+      background: rgba(251, 113, 133, 0.15);
+      border: 1px solid rgba(251, 113, 133, 0.4);
+      color: var(--accent-rose);
+    }
+    .theme-banner.theme-4 {
+      background: rgba(52, 211, 153, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      color: var(--accent-emerald);
+    }
+    .theme-banner.theme-5 {
+      background: rgba(192, 132, 252, 0.15);
+      border: 1px solid rgba(192, 132, 252, 0.4);
+      color: var(--accent-purple);
+    }
+    .theme-banner.theme-6 {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: var(--accent-rose);
+    }
+    .theme-banner.theme-summary {
+      background: rgba(148, 163, 184, 0.15);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #e2e8f0;
+    }
+
+    h1.slide-title {
+      font-size: 2.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.02em;
+    }
+
+    p.slide-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 1.8rem;
+      line-height: 1.5;
+    }
+
+    /* Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.6rem;
+      flex: 1;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.4rem;
+      flex: 1;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .card.highlight-cyan { border-top: 3px solid var(--accent-cyan); }
+    .card.highlight-gold { border-top: 3px solid var(--accent-gold); }
+    .card.highlight-emerald { border-top: 3px solid var(--accent-emerald); }
+    .card.highlight-rose { border-top: 3px solid var(--accent-rose); }
+    .card.highlight-purple { border-top: 3px solid var(--accent-purple); }
+
+    .card-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #f8fafc;
+    }
+
+    .card-title span.latin {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--accent-cyan);
+      font-style: italic;
+      font-weight: normal;
+    }
+
+    .card-content {
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-content ul {
+      list-style-type: none;
+    }
+
+    .card-content li {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .card-content li::before {
+      content: "▪";
+      position: absolute;
+      left: 0;
+      color: var(--accent-cyan);
+      font-size: 0.95rem;
+    }
+
+    /* Example Card inside Sauropoda */
+    .example-card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .example-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.25rem;
+    }
+    .example-latin {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      font-style: italic;
+      margin-bottom: 0.45rem;
+    }
+    .example-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Step flow chain */
+    .flow-chain {
+      display: flex;
+      align-items: stretch;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .flow-step-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+
+    .flow-step-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.2rem;
+    }
+
+    .flow-step-desc {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      color: var(--text-dim);
+      font-size: 1.2rem;
+      user-select: none;
+    }
+
+    /* Metric Badges & Stat Box */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.75rem;
+      margin: 0.9rem 0;
+    }
+
+    .stat-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.8rem;
+      border-radius: 6px;
+    }
+
+    .stat-val {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      font-family: var(--font-mono);
+      line-height: 1.15;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+      line-height: 1.3;
+    }
+
+    /* Comparison Table */
+    .table-container {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .table-container th {
+      background: #172238;
+      color: #e2e8f0;
+      text-align: left;
+      padding: 0.8rem 1.1rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+    }
+
+    .table-container td {
+      padding: 0.8rem 1.1rem;
+      border-bottom: 1px solid rgba(35, 48, 74, 0.5);
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .table-container tr:last-child td {
+      border-bottom: none;
+    }
+
+    .table-container tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Fact & Consensus Panels */
+    .vs-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 0.8rem;
+    }
+
+    .myth-pane {
+      background: rgba(251, 113, 133, 0.07);
+      border: 1px solid rgba(251, 113, 133, 0.25);
+      border-left: 4px solid var(--accent-rose);
+      border-radius: 6px;
+      padding: 1rem 1.2rem;
+    }
+
+    .fact-pane {
+      background: rgba(52, 211, 153, 0.07);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      border-left: 4px solid var(--accent-emerald);
+      border-radius: 6px;
+      padding: 1rem 1.2rem;
+    }
+
+    .pane-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .myth-pane .pane-tag { color: var(--accent-rose); }
+    .fact-pane .pane-tag { color: var(--accent-emerald); }
+
+    /* Structured Section Description Box */
+    .desc-box {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .desc-box-title {
+      font-weight: 700;
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .desc-box-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Title Slide Specifics */
+    .title-slide {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 4rem;
+    }
+
+    .hero-badge {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 0.45rem 1.3rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-size: 3.6rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 2.5rem auto;
+      line-height: 1.6;
+    }
+
+    .meta-pills {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .pill b { color: #fff; }
+
+    /* Controls Bar - RIGID FIXED POSITIONING */
+    #controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3.6rem;
+      background: rgba(10, 14, 23, 0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 100;
+    }
+
+    .ctrl-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      max-width: 36%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* CENTER BUTTONS ARE ABSOLUTELY FIXED IN DEAD CENTER */
+    .ctrl-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .ctrl-btn {
+      background: #172238;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.45rem 1.05rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+
+    .ctrl-btn:hover {
+      background: #233355;
+      border-color: var(--accent-cyan);
+      color: #ffffff;
+    }
+
+    .ctrl-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      border-color: var(--border-subtle);
+    }
+
+    .ctrl-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    /* Floating Side Navigation Arrows (Fixed at screen sides) */
+    .side-nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3.2rem;
+      height: 4.8rem;
+      background: rgba(17, 24, 39, 0.6);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 2.2rem;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      z-index: 90;
+      backdrop-filter: blur(4px);
+      user-select: none;
+    }
+
+    .side-nav-btn:hover {
+      background: rgba(23, 34, 59, 0.95);
+      color: #ffffff;
+      border-color: var(--accent-cyan);
+    }
+
+    .side-nav-btn:disabled {
+      opacity: 0.12;
+      cursor: not-allowed;
+      border-color: transparent;
+    }
+
+    .side-nav-left { left: 1.2rem; }
+    .side-nav-right { right: 1.2rem; }
+
+    /* Progress Bar */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #38bdf8, #34d399);
+      width: 0%;
+      transition: width 0.3s ease;
+      z-index: 101;
+    }
+
+    /* Overview Grid Modal */
+    #overview-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 14, 23, 0.96);
+      backdrop-filter: blur(12px);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      padding: 3rem;
+      overflow-y: auto;
+    }
+
+    #overview-modal.open { display: flex; }
+
+    .overview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1rem;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .overview-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .overview-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    .overview-card.active {
+      border-color: var(--accent-emerald);
+      background: #15233e;
+    }
+
+    .overview-card-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-cyan);
+      margin-bottom: 0.4rem;
+    }
+
+    .overview-card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.35;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 3px;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: bold;
+    }
+    .badge-rose {
+      background: rgba(251, 113, 133, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(251, 113, 133, 0.3);
+    }
+    .badge-emerald {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+    .badge-cyan {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .badge-gold {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-bar"></div>
+
+  <!-- Screen-edge Floating Navigation Buttons (Fixed in place) -->
+  <button id="side-prev" class="side-nav-btn side-nav-left" title="上一頁 (←)">‹</button>
+  <button id="side-next" class="side-nav-btn side-nav-right" title="下一頁 (→)">›</button>
+
+  <main id="deck">
+
+    <!-- ==================== SLIDE 1: TITLE ==================== -->
+    <section class="slide title-slide active" data-title="首頁：中生代恐龍演化與古生物學總覽">
+      <div class="hero-badge">VERTEBRATE PALEONTOLOGY SYNOPSIS</div>
+      <h1 class="hero-title">中生代恐龍演化 <span>古生物學總覽</span></h1>
+      <p class="hero-desc">探索中生代生命演化史：從三疊紀起源、骨盆解剖分類、掠食與裝甲特化，到親代撫育與白堊紀末滅絕事件</p>
+      <div class="meta-pills">
+        <div class="pill">專題簡報：<b>恐龍演化與古生態學</b></div>
+        <div class="pill">學術依據：<b>脊椎動物古生物學研究共識</b></div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 2: ROADMAP ==================== -->
+    <section class="slide" data-title="目錄導引：六大核心主題總覽">
+      <div class="theme-banner theme-summary">目錄導引 ｜ 全書六大核心主題</div>
+      <h1 class="slide-title">恐龍演化與古生態體系全景</h1>
+      <p class="slide-subtitle">貫穿中生代逾 1.6 億年時空，以解剖構造適應與關鍵化石紀錄為綱</p>
+
+      <div class="grid-3">
+        <div class="card highlight-cyan">
+          <div class="card-title">主題一 · 起源與演化 <span class="latin">Origins</span></div>
+          <div class="card-content">
+            <ul>
+              <li>三疊紀晚期卡尼階主龍類祖先分化</li>
+              <li>四肢直立與高效率呼吸系統演化優勢</li>
+              <li>侏羅紀至白堊紀頂級掠食者生態更替</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-gold">
+          <div class="card-title">主題二 · 恐龍分類學 <span class="latin">Taxonomy</span></div>
+          <div class="card-content">
+            <ul>
+              <li>哈利·西利骨盆三骨結構分類基準</li>
+              <li>蜥臀目 (Saurischia) 與鳥臀目 (Ornithischia)</li>
+              <li>演化悖論：鳥類源於蜥臀目獸腳類恐龍</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-rose">
+          <div class="card-title">主題三 · 肉食性恐龍 <span class="latin">Carnivores</span></div>
+          <div class="card-content">
+            <ul>
+              <li>暴龍屬 (*Tyrannosaurus*)：8–9.5 噸體量與碎骨咬合</li>
+              <li>伶盜龍屬 (*Velociraptor*)：火雞體型與羽莖瘤飛羽實證</li>
+              <li>猛禽式固定模型 (RPR) 與單獨伏擊習性</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-emerald">
+          <div class="card-title">主題四 · 植食性恐龍 <span class="latin">Herbivores</span></div>
+          <div class="card-content">
+            <ul>
+              <li>三角龍屬 (*Triceratops*)：實心頭盾與剪切齒電池</li>
+              <li>劍龍屬 (*Stegosaurus*)：骨板展示與尾刺 (*Thagomizer*)</li>
+              <li>巨型蜥腳下目：骨骼氣腔化減重與胃石研磨</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-purple">
+          <div class="card-title">主題五 · 生活與繁殖 <span class="latin">Paleoethology</span></div>
+          <div class="card-content">
+            <ul>
+              <li>恐龍蛋方解石結晶結構與同心環狀蛋巢</li>
+              <li>竊蛋龍屬抱卵護幼的歷史科學平反</li>
+              <li>慈母龍屬集群築巢育幼與高代謝中溫性</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-rose">
+          <div class="card-title">主題六 · 恐龍滅絕 <span class="latin">Extinction</span></div>
+          <div class="card-content">
+            <ul>
+              <li>白堊紀—古近紀 (K-Pg) 界線與希克蘇魯伯撞擊</li>
+              <li>全球野火、含硫粉塵遮蔽與撞擊冬天形成</li>
+              <li>非鳥恐龍滅絕 vs 現生鳥類（鳥類恐龍）倖存</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 3: THEME 1 (ORIGINS) ==================== -->
+    <section class="slide" data-title="主題一：起源與演化先機">
+      <div class="theme-banner theme-1">主題一 ｜ 恐龍的起源與演化</div>
+      <h1 class="slide-title">主龍類輻射適應與早期演化先機</h1>
+      <p class="slide-subtitle">誕生於約 2.3 億年前的三疊紀晚期卡尼階 (~233 Ma)，自邊緣小型族群走向陸地霸主</p>
+
+      <div class="grid-2">
+        <div class="card highlight-cyan">
+          <div class="card-title">主龍類 (Archosauria) 演化發端</div>
+          <div class="card-content">
+            <p style="margin-bottom: 0.8rem;">在二疊紀末大滅絕後，雙孔亞綱的主龍形下綱迅速分化為兩大演化支系：</p>
+            <ul>
+              <li><b>假鱷類 (Pseudosuchia)</b>：三疊紀佔據陸地頂級生態位的大型四足掠食者（如勞氏鱷科 Rauisuchidae）。</li>
+              <li><b>鳥頸類主龍 (Avemetatarsalia)</b>：演化出翼龍目與<b>恐龍形態類 (Dinosauromorpha)</b>。</li>
+            </ul>
+            <div class="stat-row">
+              <div class="stat-box">
+                <div class="stat-val">~233 Ma</div>
+                <div class="stat-label">恐龍最早已知地層年代</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-val">始盜龍 / 艾雷拉龍</div>
+                <div class="stat-label">南美卡尼階地層原始雙足代表</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card highlight-emerald">
+          <div class="card-title">三大關鍵生理與運動競爭優勢</div>
+          <div class="card-content">
+            <ul>
+              <li><b>完全直立步態 (Erect Stance)</b>：股骨頭呈近 90 度彎曲深入骨盆髖臼，四肢直立於軀幹下方。相較於向兩側攤開的原始爬行姿態，長途移動能耗大幅降低。</li>
+              <li><b>高效率雙足運動 (Bipedal Locomotion)</b>：後肢支撐重心並提供推進力，解放前肢進行抓握與特化捕食。</li>
+              <li><b>單向流氣囊呼吸雛形 (Avian-like Air Sacs)</b>：在三疊紀低氧乾旱環境中，具備高效率氧氣交換與體溫散熱調節機制。</li>
+              <li><b>生態位機遇</b>：約 2 億 100 萬年前三疊紀末滅絕事件瓦解了假鱷類優勢，恐龍全面進駐陸地生態位。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 4: THEME 1 (NICHE REPLACEMENT) ==================== -->
+    <section class="slide" data-title="主題一：中生代頂級掠食者生態位更替">
+      <div class="theme-banner theme-1">主題一 ｜ 恐龍的起源與演化</div>
+      <h1 class="slide-title">頂級掠食者與生態位更替歷程</h1>
+      <p class="slide-subtitle">中生代陸生食物鏈頂層經歷三次關鍵巨型掠食者家族更換</p>
+
+      <table class="table-container">
+        <thead>
+          <tr>
+            <th>地質年代</th>
+            <th>統治性頂級掠食家族</th>
+            <th>代表屬名</th>
+            <th>捕食解剖特化與生態角色</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>侏羅紀晚期</b><br><span style="font-family:var(--font-mono);font-size:0.75rem;">~155–145 Ma</span></td>
+            <td><b>異特龍科</b><br>(Allosauridae)</td>
+            <td>異特龍屬<br><i>Allosaurus</i></td>
+            <td>刀刃狀側扁牙齒、寬角度張頜與斧狀下頜劈砍機制，專門獵捕中小型蜥腳類與劍龍類。</td>
+          </tr>
+          <tr>
+            <td><b>白堊紀早—中期</b><br><span style="font-family:var(--font-mono);font-size:0.75rem;">~125–90 Ma</span></td>
+            <td><b>鯊齒龍科 & 棘龍科</b><br>(Carcharodontosauridae / Spinosauridae)</td>
+            <td>鯊齒龍屬<br>棘龍屬</td>
+            <td>體長達 12-15 公尺之巨獸；鯊齒龍以巨大頭骨撕裂巨型泰坦巨龍，棘龍特化兩棲水生捕魚。</td>
+          </tr>
+          <tr>
+            <td><b>白堊紀晚期</b><br><span style="font-family:var(--font-mono);font-size:0.75rem;">~80–66 Ma</span></td>
+            <td><b>暴龍超科 (暴龍科)</b><br>(Tyrannosauridae)</td>
+            <td>暴龍屬<br><i>Tyrannosaurus</i></td>
+            <td>虛骨龍類巨型化；演化出極致厚實圓錐齒與碎骨咬合力，具立體景深視覺，統御北美與亞洲。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flow-chain">
+        <div class="flow-step">
+          <div class="flow-step-num">STAGE 01</div>
+          <div class="flow-step-title">三疊紀晚期</div>
+          <div class="flow-step-desc">小型敏捷雙足獵手崛起</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-step-num">STAGE 02</div>
+          <div class="flow-step-title">侏羅紀晚期</div>
+          <div class="flow-step-desc">異特龍科稱霸北方大陸</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-step-num">STAGE 03</div>
+          <div class="flow-step-title">白堊紀早中期</div>
+          <div class="flow-step-desc">鯊齒龍類體型達到巔峰</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-step-num">STAGE 04</div>
+          <div class="flow-step-title">白堊紀晚期</div>
+          <div class="flow-step-desc">暴龍科統治頂級碎骨生態位</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 5: THEME 2 (TAXONOMY & PELVIS) ==================== -->
+    <section class="slide" data-title="主題二：恐龍分類學與骨盆結構">
+      <div class="theme-banner theme-2">主題二 ｜ 恐龍分類學</div>
+      <h1 class="slide-title">恐龍骨盆三骨結構與經典兩分法</h1>
+      <p class="slide-subtitle">哈利·西利（Harry Seeley, 1887）依恥骨排列朝向確立的兩大演化支系</p>
+
+      <div class="desc-box">
+        <div class="desc-box-title">骨盆三塊核心骨骼的解剖分工</div>
+        <div class="desc-box-body">
+          恐龍的骨盆由三對成對骨骼癒合形成：上方扁平的<b>腸骨 (Ilium)</b> 連接脊柱與薦椎，提供下肢肌肉強固附著面；後方的<b>坐骨 (Ischium)</b> 往後下方斜伸；位於前方的<b>恥骨 (Pubis)</b> 其延伸朝向則是區分恐龍兩大支系的最關鍵指標。
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card highlight-gold">
+          <div class="card-title">一、蜥臀目 (Saurischia, "Lizard-hipped")</div>
+          <div class="card-content">
+            <ul>
+              <li><b>恥骨排列朝向</b>：恥骨主軸明顯朝向<b>前下方</b>傾斜，與後伸的坐骨形成張開的倒 V 字形三向輻射構造，外形與原始爬行動物一致。</li>
+              <li><b>所屬核心類群</b>：包含雙足肉食為主的<b>獸腳亞目 (Theropoda)</b> 以及巨型四足長頸的<b>蜥腳形亞目 (Sauropodomorpha)</b>。</li>
+              <li><b>生理機能特性</b>：骨盆結構保持後肢靈活大步幅運動，腹腔比例適中，強調奔跑推進力與承重軸心平衡。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-cyan">
+          <div class="card-title">二、鳥臀目 (Ornithischia, "Bird-hipped")</div>
+          <div class="card-content">
+            <ul>
+              <li><b>恥骨排列朝向</b>：恥骨主軸向後旋轉，與坐骨呈<b>緊密向後平行</b>延伸；恥骨前端通常演化出向前突出的「前恥骨突 (Prepubic process)」。</li>
+              <li><b>所屬核心類群</b>：全部為植食性，包含<b>裝甲類</b>（劍龍、甲龍）、<b>角龍類</b>（三角龍）與<b>鳥腳類</b>（鴨嘴龍）。</li>
+              <li><b>生理機能特性</b>：恥骨後轉讓出腹部前方巨大空間，容納容積龐大的植物發酵消化腔道與盲腸發酵室。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 6: THEME 2 (AVIAN PARADOX) ==================== -->
+    <section class="slide" data-title="主題二：鳥類起源悖論與系統發育">
+      <div class="theme-banner theme-2">主題二 ｜ 恐龍分類學</div>
+      <h1 class="slide-title">分類學悖論：鳥類源於蜥臀目</h1>
+      <p class="slide-subtitle">打破字面直覺陷阱——鳥類的恥骨後轉是調整飛行重心的獨立趨同演化</p>
+
+      <div class="grid-2">
+        <div class="card highlight-rose">
+          <div class="card-title">演化上的命名悖論與真相</div>
+          <div class="card-content">
+            <div class="myth-pane" style="margin-bottom: 0.8rem;">
+              <div class="pane-tag">❌ 字面常見直覺誤區</div>
+              誤以為名稱意為「鳥類骨盆」的鳥臀目 (Ornithischia) 是現代鳥類的祖先。
+            </div>
+            <div class="fact-pane">
+              <div class="pane-tag">✓ 現代系統發育學定論</div>
+              所有鳥類均演化自<b>蜥臀目獸腳亞目中的手盜龍類 (Maniraptora)</b>。鳥類演化出向後傾斜的恥骨，是為了在雙足步行與空中飛行時將整體重心向後調整至髖臼關節，與鳥臀目的植食大腹腔適應屬於<b>各自獨立發生的趨同演化 (Convergence)</b>。
+            </div>
+          </div>
+        </div>
+
+        <div class="card highlight-emerald">
+          <div class="card-title">恐龍總目系統發育骨幹層級</div>
+          <div class="card-content">
+            <div class="desc-box" style="margin-bottom: 0.6rem;">
+              <span class="badge badge-gold">Saurischia 蜥臀目</span>
+              <div style="font-size:0.85rem; color:#cbd5e1; margin-top:0.3rem;">
+                ├─ <b>蜥腳形亞目 (Sauropodomorpha)</b>：長頸巨型植食者（腕龍、梁龍）<br>
+                └─ <b>獸腳亞目 (Theropoda)</b>：雙足肉食獵手與羽毛演化者<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;└─ <b>手盜龍類 (Maniraptora)</b> ──> <span class="badge badge-emerald">Aves 鳥綱 (現生恐龍)</span>
+              </div>
+            </div>
+            <div class="desc-box">
+              <span class="badge badge-cyan">Ornithischia 鳥臀目</span>
+              <div style="font-size:0.85rem; color:#cbd5e1; margin-top:0.3rem;">
+                ├─ <b>裝甲類 (Thyreophora)</b>：劍龍亞目、甲龍亞目<br>
+                └─ <b>角足龍類 (Cerapoda)</b>：角龍下目、鳥腳下目、厚頭龍下目
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 7: THEME 3 (TYRANNOSAURUS) ==================== -->
+    <section class="slide" data-title="主題三：暴龍屬解剖特化">
+      <div class="theme-banner theme-3">主題三 ｜ 肉食性恐龍</div>
+      <h1 class="slide-title">暴龍屬 <i>Tyrannosaurus</i></h1>
+      <p class="slide-subtitle">白堊紀晚期馬斯垂克階 (~68–66 Ma) 北美頂級掠食者，陸生動物極致咬合力代表</p>
+
+      <div class="grid-3">
+        <div class="card highlight-gold">
+          <div class="card-title">香蕉狀鋸齒牙與碎骨咬合</div>
+          <div class="card-content">
+            <ul>
+              <li><b>粗壯厚實齒冠</b>：牙齒截面呈厚實圓卵形（非刃片狀），含齒根長度可達 30 公分，邊緣具粗糙鋸齒，承受橫向劇烈扭力。</li>
+              <li><b>極致碎骨咬合力</b>：成體後齒咬合力達 <b>35,000 至 57,000 牛頓</b>（約 3.6–5.8 公噸），能直接咬穿粉碎大型角龍類厚重骨骼。</li>
+              <li><b>癒合鼻骨</b>：左右鼻骨緊密癒合，抵禦撕咬時產生的縱向扭轉應力。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-cyan">
+          <div class="card-title">感官特化與生物力學</div>
+          <div class="card-content">
+            <div class="stat-box" style="margin-bottom: 0.6rem;">
+              <div class="stat-val">55° 立體雙眼視覺</div>
+              <div class="stat-label">眼眶朝向正前方，具超越猛禽之立體景深感知</div>
+            </div>
+            <div class="stat-box" style="margin-bottom: 0.6rem;">
+              <div class="stat-val">8,400–9,500 kg</div>
+              <div class="stat-label">基於成體 3D 骨骼容積掃描之科學推估體重</div>
+            </div>
+            <div class="stat-box" style="margin-bottom: 0.6rem;">
+              <div class="stat-val">20–27 km/h</div>
+              <div class="stat-label">受限於自重骨骼安全負荷的最高奔跑步態時速</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card highlight-rose">
+          <div class="card-title">前肢與生態定位</div>
+          <div class="card-content">
+            <ul>
+              <li><b>高度退化的二指前肢</b>：長度僅約 1 公尺，但肱骨粗壯且肌肉附著點結實，推測具起立輔助支撐或交配固定功能。</li>
+              <li><b>兼性頂級捕食者</b>：化石記錄中多次發現癒合的暴龍牙齒咬痕（如埃德蒙頓龍尾椎），證實其具備主動獵殺大型活體的能力，同時亦兼食腐肉。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 8: THEME 3 (VELOCIRAPTOR) ==================== -->
+    <section class="slide" data-title="主題三：伶盜龍屬真實生態">
+      <div class="theme-banner theme-3">主題三 ｜ 肉食性恐龍</div>
+      <h1 class="slide-title">伶盜龍屬 <i>Velociraptor</i></h1>
+      <p class="slide-subtitle">白堊紀戈壁沙漠坎帕階 (~75–71 Ma)，覆羽敏捷的小型馳龍科掠食者</p>
+
+      <div class="grid-2">
+        <div class="card highlight-cyan">
+          <div class="card-title">羽毛鐵證與解剖特化</div>
+          <div class="card-content">
+            <ul>
+              <li><b>羽莖瘤 (Quill Knobs) 鐵證</b>：2007 年於蒙古尺骨標本上發現 6 處羽軸韌帶附著節節點，無可爭議證實前肢具備大型飛羽，體表覆蓋發達絨羽。</li>
+              <li><b>第二趾鐮刀爪 (Sickle Claw)</b>：長約 6.5 公分，平時向上抬起不接觸地面以保持鋒利。</li>
+              <li><b>RPR 獵物壓制模型 (Fowler et al.)</b>：鐮刀爪主要非劃破肚皮，而是如同現代鷹隼，以自重與利爪將獵物壓制固定在地面，並拍打羽翼穩定重心。</li>
+              <li><b>「格鬥恐龍」化石</b>：定格了與植食性原角龍搏鬥同歸於盡之瞬間，鐮刀爪深刺對手頸部。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-rose">
+          <div class="card-title">大眾通俗形象 vs 現代古生物學實證</div>
+          <div class="card-content">
+            <div class="vs-box">
+              <div class="myth-pane">
+                <div class="pane-tag">❌ 通俗影視形象</div>
+                <ul>
+                  <li>體型如成年人類高大粗壯</li>
+                  <li>全身裸露爬行動物鱗片</li>
+                  <li>手腕下垂呈無力「殭屍手」</li>
+                  <li>軍隊般高度溝通組織圍獵</li>
+                </ul>
+              </div>
+              <div class="fact-pane">
+                <div class="pane-tag">✓ 古生物學現代實證</div>
+                <ul>
+                  <li><b>真實體型如火雞大小</b> (重 15–20kg)</li>
+                  <li><b>完整鳥類羽毛覆蓋</b>與前肢羽翼</li>
+                  <li>掌心相對內合，無法向後旋前</li>
+                  <li><b>單獨伏擊</b>或類似巨蜥之機會爭食</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 9: THEME 4 (TRICERATOPS) ==================== -->
+    <section class="slide" data-title="主題四：三角龍屬防禦與齒系">
+      <div class="theme-banner theme-4">主題四 ｜ 植食性恐龍</div>
+      <h1 class="slide-title">三角龍屬 <i>Triceratops</i></h1>
+      <p class="slide-subtitle">白堊紀晚期馬斯垂克階 (~68–66 Ma)，巨型角龍類的實心重盾與剪切齒電池</p>
+
+      <div class="grid-3">
+        <div class="card highlight-gold">
+          <div class="card-title">實心骨質頭盾 (Solid Frill)</div>
+          <div class="card-content">
+            <p>頭骨長達 2 至 2.5 公尺，占全身三分之一。</p>
+            <p style="margin-top: 0.6rem;">不同於其他角龍類（如開角龍屬）具備減輕重量的大型頭骨窗孔，三角龍的頂骨與鱗骨完全癒合為<b>厚實無孔的實心骨質頭盾</b>，為頸部與肩部提供強大物理屏障。</p>
+          </div>
+        </div>
+
+        <div class="card highlight-emerald">
+          <div class="card-title">剪切型齒電池 (Dental Battery)</div>
+          <div class="card-content">
+            <p>上下頜兩側各有 36 至 40 個緊密垂直疊合的齒列，常駐維持數百顆牙齒。</p>
+            <p style="margin-top: 0.6rem;">咬合時並非哺乳類橫向磨碎，而是藉由垂直閉合時的剪刀狀咬合面剪切堅硬粗纖維，磨耗後底層牙齒持續推擠遞補。</p>
+          </div>
+        </div>
+
+        <div class="card highlight-rose">
+          <div class="card-title">古病理學：同種角鬥痕跡</div>
+          <div class="card-content">
+            <p>Farke 等人（2009）研究指出，三角龍頭盾與面部的穿刺骨傷具備以下特徵：</p>
+            <ul style="margin-top: 0.6rem;">
+              <li>傷痕間距與深度與<b>成年同類的額角尖端完全吻合</b>。</li>
+              <li>傷痕多具有生前骨骼癒合骨痂。</li>
+              <li>證實頭盾與角狀突起主要用於<b>同種雄性求偶展示與角力搏鬥</b>。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 10: THEME 4 (STEGOSAURUS) ==================== -->
+    <section class="slide" data-title="主題四：劍龍屬與尾刺辨析">
+      <div class="theme-banner theme-4">主題四 ｜ 植食性恐龍</div>
+      <h1 class="slide-title">劍龍屬 <i>Stegosaurus</i></h1>
+      <p class="slide-subtitle">侏羅紀晚期啟莫里階至提通階 (~155–150 Ma)，骨板與防禦構造之精準解剖</p>
+
+      <div class="grid-2">
+        <div class="card highlight-cyan">
+          <div class="card-title">背部交錯骨板 (Dermal Plates)</div>
+          <div class="card-content">
+            <ul>
+              <li>背部聳立 17 至 22 塊交錯排列的扁平皮內成骨（非左右成對對稱）。</li>
+              <li><b>視覺威嚇與展示</b>：垂直聳立輪廓使劍龍在叢林中顯得異常龐大，震懾異特龍等掠食者，並作為種內性選擇展示。</li>
+              <li><b>微血管散熱功能</b>：骨板表面富含微血管溝槽，能輔助吸收日光或藉由風冷調節體溫。</li>
+              <li><b>神經系統真相</b>：腦部重約 70–80 公克，腰椎擴大腔非第二大腦，為供應尾部神經反射的<b>糖原體 (Glycogen body)</b>。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-rose">
+          <div class="card-title">關鍵辨析：尾刺 (Thagomizer) vs 尾槌 (Tail Club)</div>
+          <div class="card-content">
+            <table class="table-container" style="margin-top: 0;">
+              <thead>
+                <tr>
+                  <th>比對項目</th>
+                  <th>劍龍屬 (Stegosauria)</th>
+                  <th>甲龍科 (Ankylosauridae)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>解剖構造名稱</b></td>
+                  <td><span class="badge badge-emerald">尾刺 (Thagomizer)</span></td>
+                  <td><span class="badge badge-rose">尾槌 (Tail Club)</span></td>
+                </tr>
+                <tr>
+                  <td><b>物理外觀</b></td>
+                  <td>4 根長 60–90cm 橫向骨質尖刺</td>
+                  <td>由皮內成骨癒合之圓球重錘</td>
+                </tr>
+                <tr>
+                  <td><b>力學打擊機制</b></td>
+                  <td>橫掃穿刺、撕裂肌肉與內臟</td>
+                  <td>垂直/橫向鈍擊、粉碎骨骼</td>
+                </tr>
+                <tr>
+                  <td><b>化石實證</b></td>
+                  <td>異特龍尾椎發現吻合之穿刺傷</td>
+                  <td>暴龍脛骨發現被重擊斷裂骨痂</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size: 0.8rem; color: var(--accent-rose); margin-top: 0.75rem; font-weight: bold;">
+              ⚠ 辨析核心：劍龍尾端為尖銳穿刺型「尾刺」，「尾槌」為甲龍科專有構造！
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 11: THEME 4 (SAUROPODA) ==================== -->
+    <section class="slide" data-title="主題四：巨型蜥腳下目與經典代表">
+      <div class="theme-banner theme-4">主題四 ｜ 植食性恐龍</div>
+      <h1 class="slide-title">巨型蜥腳下目：陸地巨獸與典型代表</h1>
+      <p class="slide-subtitle">蜥臀目植食演化巨峰，突破脊椎動物陸生體型極限 (30–75 公噸)</p>
+
+      <!-- Top Row: Physiological Mechanisms -->
+      <div class="grid-3" style="margin-bottom: 1rem; flex: none;">
+        <div class="card highlight-gold" style="padding: 1.1rem;">
+          <div class="card-title" style="font-size: 1.05rem;">骨骼氣腔化 (Pneumatization)</div>
+          <div class="card-content" style="font-size: 0.88rem;">
+            發達氣囊延伸進入椎骨，形成精密蜂巢狀空腔，<b>自重銳減 30%–50%</b>，達成輕量化與超高抗彎強度的極致平衡。
+          </div>
+        </div>
+
+        <div class="card highlight-cyan" style="padding: 1.1rem;">
+          <div class="card-title" style="font-size: 1.05rem;">長頸「吸塵器」攝食能量學</div>
+          <div class="card-content" style="font-size: 0.88rem;">
+            原地站立無需移動沉重四肢，僅擺動長頸即可採食半徑十餘公尺內的植被，配合柱狀直立四肢極度節省運動能耗。
+          </div>
+        </div>
+
+        <div class="card highlight-emerald" style="padding: 1.1rem;">
+          <div class="card-title" style="font-size: 1.05rem;">胃石 (Gastroliths) 與發酵室</div>
+          <div class="card-content" style="font-size: 0.88rem;">
+            缺乏咀嚼齒，吞入磨圓胃石在肌胃內劇烈研磨植物纖維，隨後在超長消化道內依靠微生物高效厭氧發酵。
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Concrete Representative Examples -->
+      <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.4rem;">
+        REPRESENTATIVE SAUROPOD GENERA · 經典代表屬種
+      </div>
+      <div class="grid-4">
+        <div class="example-card">
+          <div class="example-name">腕龍屬</div>
+          <div class="example-latin">Brachiosaurus</div>
+          <div class="example-desc">前肢顯著長於後肢，肩部高聳，長頸垂直朝上伸展，專門攝食 12 公尺高空針葉樹冠。</div>
+        </div>
+        <div class="example-card">
+          <div class="example-name">梁龍屬 / 雷龍屬</div>
+          <div class="example-latin">Diplodocus / Brontosaurus</div>
+          <div class="example-desc">體型極為修長，尾端特化為鞭狀（可發出超音速音爆防禦），長頸水平低角度橫掃灌木。</div>
+        </div>
+        <div class="example-card">
+          <div class="example-name">阿根廷龍屬</div>
+          <div class="example-latin">Argentinosaurus</div>
+          <div class="example-desc">白堊紀泰坦巨龍類超巨型代表，體長逾 35 公尺、體重達 60–75 公噸，為史上最龐大陸生動物。</div>
+        </div>
+        <div class="example-card">
+          <div class="example-name">馬門溪龍屬</div>
+          <div class="example-latin">Mamenchisaurus</div>
+          <div class="example-desc">亞洲侏羅紀晚期著名代表，頸部長度達 11–14 公尺（佔體長近一半），擁有極限長頸比例。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 12: THEME 5 (BEHAVIOR & REPRODUCTION) ==================== -->
+    <section class="slide" data-title="主題五：生活習性、繁殖與親代撫育">
+      <div class="theme-banner theme-5">主題五 ｜ 恐龍的生活與繁殖</div>
+      <h1 class="slide-title">恐龍的繁殖、育幼與親代撫育</h1>
+      <p class="slide-subtitle">巢穴顯微結構與地層實證：徹底推翻「冷血、無情拋棄後代」的傳統偏見</p>
+
+      <div class="grid-2">
+        <div class="card highlight-purple">
+          <div class="card-title">竊蛋龍屬抱卵護幼的歷史平反</div>
+          <div class="card-content">
+            <div class="vs-box" style="margin-top: 0;">
+              <div class="myth-pane">
+                <div class="pane-tag">❌ 1923年命名冤案</div>
+                骨骼發現於原角龍蛋旁，被誤判為「偷食其他恐龍蛋的賊 (Egg-thief)」。
+              </div>
+              <div class="fact-pane">
+                <div class="pane-tag">✓ 1990年代戈壁重大實證</div>
+                化石清晰顯示個體<b>以雙翼覆蓋之鳥類抱卵姿態趴伏在巢穴上</b>，胚胎證實即是竊蛋龍後代，至死護卵！
+              </div>
+            </div>
+            <p style="margin-top: 0.8rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.55;">
+              蛋呈雙層同心環狀排列，留出中央空隙供親代腹部緊貼保溫，前肢羽毛提供防風阻砂屏障。
+            </p>
+          </div>
+        </div>
+
+        <div class="card highlight-emerald">
+          <div class="card-title">慈母龍屬集群築巢與中溫性代謝</div>
+          <div class="card-content">
+            <ul>
+              <li><b>慈母龍屬 (*Maiasaura*) 巢山實證</b>：蒙大拿州發現規則排列巢群（巢距約7公尺），幼龍骨骼關節未硬化無法行走，但<b>牙齒已有大量咀嚼磨損</b>，鐵證證明母龍需持續外出採集植物回巢餵養（晚成雛 Altricial）。</li>
+              <li><b>骨組織學證實高速生長</b>：骨切片顯示密集哈弗斯氏血管系統與生長停滯線，生長速率比擬現代大型哺乳類與鳥類。</li>
+              <li><b>中溫性 (Mesothermy)</b>：具備自體產熱與高新陳代謝能力，支持活躍的長距離季節性遷徙與集體防禦。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 13: THEME 6 (EXTINCTION EVENT) ==================== -->
+    <section class="slide" data-title="主題六：白堊紀—古近紀滅絕事件">
+      <div class="theme-banner theme-6">主題六 ｜ 恐龍滅絕</div>
+      <h1 class="slide-title">白堊紀—古近紀滅絕事件 (K-Pg)</h1>
+      <p class="slide-subtitle">約 6,600 萬年前希克蘇魯伯小行星撞擊與全球食物鏈崩潰機制</p>
+
+      <div class="grid-3">
+        <div class="card highlight-rose">
+          <div class="card-title">國際地層命名規範</div>
+          <div class="card-content">
+            <p><b>正式名稱：K-Pg 滅絕事件</b></p>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.4rem; line-height:1.55;">
+              國際地層委員會（ICS）已廢止「第三紀 (Tertiary)」術語，由古近紀 (Paleogene) 與新近紀 (Neogene) 取代。舊稱「K-T 滅絕」在現代學術寫作中一律更新為 <b>K-Pg</b>。
+            </p>
+          </div>
+        </div>
+
+        <div class="card highlight-cyan">
+          <div class="card-title">撞擊點與化學鐵證</div>
+          <div class="card-content">
+            <p><b>希克蘇魯伯隕石坑 (Chicxulub)</b></p>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.4rem; line-height:1.55;">
+              位於墨西哥猶加敦半島，直徑 180 公里、深 20 公里。<br>
+              撞擊小行星直徑約 10–15 公里，伴隨全球 K-Pg 界線地層的<b>銥元素異常 (Iridium anomaly)</b> 與衝擊石英。
+            </p>
+          </div>
+        </div>
+
+        <div class="card highlight-gold">
+          <div class="card-title">撞擊冬天 (Impact Winter)</div>
+          <div class="card-content">
+            <p><b>光合作用全面停擺</b></p>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.4rem; line-height:1.55;">
+              高溫蒸發億噸含硫石膏地層，硫酸鹽氣膠與碳黑遮蔽日光數月至數年。地表均溫驟降 15–25°C，酸雨席捲，植物光合作用停擺引發食物鏈崩潰。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-chain">
+        <div class="flow-step">
+          <div class="flow-step-num">TRIGGER</div>
+          <div class="flow-step-title">小行星高速撞擊</div>
+          <div class="flow-step-desc">猶加敦半島形成 180km 隕石坑</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-step-num">CASCADE 1</div>
+          <div class="flow-step-title">全球野火與海嘯</div>
+          <div class="flow-step-desc">地表熱輻射脈衝點燃全球森林</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-step-num">CASCADE 2</div>
+          <div class="flow-step-title">撞擊冬天降臨</div>
+          <div class="flow-step-desc">硫酸鹽與黑碳遮蔽日光數年</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-step-num">RESULT</div>
+          <div class="flow-step-title">食物鏈自底層瓦解</div>
+          <div class="flow-step-desc">巨型非鳥恐龍能量斷絕滅絕</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 14: THEME 6 (SURVIVORS & AVIAN LEGACY) ==================== -->
+    <section class="slide" data-title="主題六：德干火山疊加與鳥類倖存">
+      <div class="theme-banner theme-6">主題六 ｜ 恐龍滅絕</div>
+      <h1 class="slide-title">環境複合壓力與「恐龍從未滅絕」</h1>
+      <p class="slide-subtitle">德干暗色岩火山環境壓力，與非鳥恐龍滅絕後鳥類的演化繼承</p>
+
+      <div class="grid-2">
+        <div class="card highlight-rose">
+          <div class="card-title">德干暗色岩 (Deccan Traps) 背景壓力</div>
+          <div class="card-content">
+            <ul>
+              <li>印度板塊爆發百萬立方公里的超巨型洪流玄武岩噴發。</li>
+              <li>在撞擊前數十萬年間持續釋放巨量 CO₂ 與 SO₂，造成全球氣候在溫室酷熱與乾冷間頻繁動盪。</li>
+              <li><b>學界共識</b>：德干火山為全球生態圈造成嚴重「背景脆弱化壓力」，小行星撞擊則是給予瀕危生態系的致命一擊。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-emerald">
+          <div class="card-title">終極演化共識：誰活了下來？</div>
+          <div class="card-content">
+            <table class="table-container" style="margin-top:0;">
+              <thead>
+                <tr>
+                  <th>類群</th>
+                  <th>命運</th>
+                  <th>關鍵存續機制</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>非鳥恐龍</b><br><span style="font-size:0.75rem;">(暴龍屬、角龍類、蜥腳類)</span></td>
+                  <td><span class="badge badge-rose">全數滅絕</span></td>
+                  <td>體型過大、能量攝入需求極高，在植物與食草動物崩潰後無法維繫。</td>
+                </tr>
+                <tr>
+                  <td><b>鳥類恐龍</b><br><span style="font-size:0.75rem;">(Avian Dinosaurs / 鳥類)</span></td>
+                  <td><span class="badge badge-emerald">繁衍至今</span></td>
+                  <td>體型小、具喙嘴能食休眠種子、飛行遷徙避難、代謝效率極佳。</td>
+                </tr>
+                <tr>
+                  <td><b>哺乳動物 & 鱷類</b></td>
+                  <td><span class="badge badge-cyan">多數倖存</span></td>
+                  <td>地下穴居避難、耐飢餓低代謝，食碎屑與腐植質食物鏈。</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size: 0.88rem; color: #e2e8f0; margin-top: 0.75rem;">
+              <b>科學結論</b>：恐龍並未完全滅絕——現代鳥類即是存活至今的<b>鳥類恐龍 (Avian Dinosaurs)</b>。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 15: SUMMARY (PURE DINOSAUR KNOWLEDGE) ==================== -->
+    <section class="slide" data-title="總結：中生代恐龍演化全景總覽">
+      <div class="theme-banner theme-summary">學術總結 ｜ 中生代恐龍演化全景</div>
+      <h1 class="slide-title">恐龍演化史的三大核心圖景</h1>
+      <p class="slide-subtitle">回顧 1.6 億年支配陸地生態的生物學成就與現生演化遺產</p>
+
+      <div class="grid-3">
+        <div class="card highlight-gold">
+          <div class="card-title">一、適應輻射的奇蹟</div>
+          <div class="card-content">
+            <ul>
+              <li><b>直立步態與氣腔化</b>：骨骼自重減輕與單向呼吸支撐了從小型敏捷獵手到數十噸巨型蜥腳類的演化極限。</li>
+              <li><b>食物鏈生態位演替</b>：肉食獸腳類與植食鳥臀類經歷了齒電池、頭盾與裝甲的高強度軍備競賽。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-cyan">
+          <div class="card-title">二、顛覆刻板生理認知</div>
+          <div class="card-content">
+            <ul>
+              <li><b>高代謝中溫性</b>：恐龍並非傳統緩慢冷血爬行動物，骨組織學顯示其兼具高速生長與活躍活動力。</li>
+              <li><b>繁複親代撫育</b>：成對築巢、鳥式抱卵、回巢餵食幼雛，展現高度社會化群居行為。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card highlight-emerald">
+          <div class="card-title">三、生生不息的活化石</div>
+          <div class="card-content">
+            <ul>
+              <li><b>非鳥恐龍終結於白堊紀末</b>：希克蘇魯伯撞擊冬天摧毀了大型陸生能量網絡。</li>
+              <li><b>天空中翱翔的現生恐龍</b>：手盜龍類演化出的鳥類成功渡過大滅絕，萬種鳥類正是延續至今的鳥類恐龍。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 16: THANK YOU ==================== -->
+    <section class="slide title-slide" data-title="結尾：謝謝大家">
+      <div class="hero-badge">THE END · PRESENTATION</div>
+      <h1 class="hero-title">謝謝大家 <span>Thank You</span></h1>
+      <p class="hero-desc">探索中生代生命演化奇蹟 · 歡迎交流與討論</p>
+      <div class="meta-pills">
+        <div class="pill">專題簡報：<b>中生代恐龍演化與古生物學總覽</b></div>
+        <div class="pill">交流環節：<b>Q & A 提問與討論</b></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Controls Bar -->
+  <footer id="controls">
+    <div class="ctrl-left">
+      <span id="slide-counter">01 / 16</span>
+      <span style="opacity: 0.3;">|</span>
+      <span id="slide-name" style="color: var(--text-muted); font-family: var(--font-sans); font-size: 0.85rem;">首頁：中生代恐龍演化與古生物學總覽</span>
+    </div>
+
+    <!-- RIGIDLY FIXED CENTER BUTTONS -->
+    <div class="ctrl-center">
+      <button class="ctrl-btn" id="btn-prev" title="上一頁 (← / PageUp)">← 上一頁</button>
+      <button class="ctrl-btn" id="btn-next" title="下一頁 (→ / Space / PageDown)">下一頁 →</button>
+      <button class="ctrl-btn" id="btn-overview" title="總覽檢視 (O)">總覽檢視 (O)</button>
+    </div>
+
+    <div class="ctrl-right">
+      <span>全螢幕：<kbd style="background:#172238; border:1px solid #304269; padding:2px 5px; border-radius:3px;">F</kbd></span>
+      <span>換頁：<kbd style="background:#172238; border:1px solid #304269; padding:2px 5px; border-radius:3px;">←</kbd> <kbd style="background:#172238; border:1px solid #304269; padding:2px 5px; border-radius:3px;">→</kbd></span>
+    </div>
+  </footer>
+
+  <!-- Overview Modal -->
+  <div id="overview-modal">
+    <div class="overview-header">
+      <h2 style="font-size: 1.5rem; color:#fff;">簡報投影片總覽</h2>
+      <button class="ctrl-btn" id="btn-close-overview">關閉 (Esc / O)</button>
+    </div>
+    <div class="overview-grid" id="overview-grid"></div>
+  </div>
+
+  <script>
+    (function() {
+      const slides = document.querySelectorAll('.slide');
+      const totalSlides = slides.length;
+      let currentIndex = 0;
+
+      const counter = document.getElementById('slide-counter');
+      const slideName = document.getElementById('slide-name');
+      const progressBar = document.getElementById('progress-bar');
+      const btnPrev = document.getElementById('btn-prev');
+      const btnNext = document.getElementById('btn-next');
+      const sidePrev = document.getElementById('side-prev');
+      const sideNext = document.getElementById('side-next');
+      const btnOverview = document.getElementById('btn-overview');
+      const btnCloseOverview = document.getElementById('btn-close-overview');
+      const overviewModal = document.getElementById('overview-modal');
+      const overviewGrid = document.getElementById('overview-grid');
+
+      // Populate Overview Grid
+      slides.forEach((slide, idx) => {
+        const title = slide.getAttribute('data-title') || `Slide ${idx + 1}`;
+        const card = document.createElement('div');
+        card.className = `overview-card ${idx === 0 ? 'active' : ''}`;
+        card.innerHTML = `
+          <div class="overview-card-num">SLIDE ${String(idx + 1).padStart(2, '0')}</div>
+          <div class="overview-card-title">${title}</div>
+        `;
+        card.addEventListener('click', () => {
+          goToSlide(idx);
+          toggleOverview(false);
+        });
+        overviewGrid.appendChild(card);
+      });
+
+      function updateSlide(newIndex) {
+        if (newIndex < 0 || newIndex >= totalSlides) return;
+
+        slides[currentIndex].classList.remove('active');
+        if (newIndex > currentIndex) {
+          slides[currentIndex].classList.add('prev');
+        } else {
+          slides[currentIndex].classList.remove('prev');
+        }
+
+        slides[newIndex].classList.remove('prev');
+        slides[newIndex].classList.add('active');
+
+        currentIndex = newIndex;
+
+        // Update UI
+        counter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+        const currentTitle = slides[currentIndex].getAttribute('data-title') || '';
+        slideName.textContent = currentTitle;
+
+        const progressPercent = ((currentIndex + 1) / totalSlides) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+
+        const isFirst = currentIndex === 0;
+        const isLast = currentIndex === totalSlides - 1;
+
+        btnPrev.disabled = isFirst;
+        btnNext.disabled = isLast;
+        sidePrev.disabled = isFirst;
+        sideNext.disabled = isLast;
+
+        // Update Overview Cards
+        const overviewCards = overviewGrid.querySelectorAll('.overview-card');
+        overviewCards.forEach((c, i) => {
+          c.classList.toggle('active', i === currentIndex);
+        });
+      }
+
+      function goToSlide(index) {
+        updateSlide(index);
+      }
+
+      function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+          updateSlide(currentIndex + 1);
+        }
+      }
+
+      function prevSlide() {
+        if (currentIndex > 0) {
+          updateSlide(currentIndex - 1);
+        }
+      }
+
+      function toggleOverview(forceState) {
+        const isOpen = overviewModal.classList.contains('open');
+        const nextState = forceState !== undefined ? forceState : !isOpen;
+        if (nextState) {
+          overviewModal.classList.add('open');
+        } else {
+          overviewModal.classList.remove('open');
+        }
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => console.log(err));
+        } else {
+          document.exitFullscreen().catch(err => console.log(err));
+        }
+      }
+
+      // Event Listeners for Bottom & Side Buttons
+      btnNext.addEventListener('click', nextSlide);
+      btnPrev.addEventListener('click', prevSlide);
+      sideNext.addEventListener('click', nextSlide);
+      sidePrev.addEventListener('click', prevSlide);
+
+      btnOverview.addEventListener('click', () => toggleOverview());
+      btnCloseOverview.addEventListener('click', () => toggleOverview(false));
+
+      window.addEventListener('keydown', (e) => {
+        if (overviewModal.classList.contains('open')) {
+          if (e.key === 'Escape' || e.key.toLowerCase() === 'o') {
+            toggleOverview(false);
+          }
+          return;
+        }
+
+        switch (e.key) {
+          case 'ArrowRight':
+          case 'ArrowDown':
+          case 'PageDown':
+          case ' ':
+            e.preventDefault();
+            nextSlide();
+            break;
+          case 'ArrowLeft':
+          case 'ArrowUp':
+          case 'PageUp':
+            e.preventDefault();
+            prevSlide();
+            break;
+          case 'Home':
+            e.preventDefault();
+            goToSlide(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            goToSlide(totalSlides - 1);
+            break;
+          case 'f':
+          case 'F':
+            toggleFullscreen();
+            break;
+          case 'o':
+          case 'O':
+            toggleOverview();
+            break;
+        }
+      });
+
+      // Initialize
+      updateSlide(0);
+    })();
+  </script>
+</body>
+</html>
